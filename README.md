@@ -17,8 +17,8 @@ neovim-pytc-example is a Neovim terminal client implemented in Python (using lib
 Most Neovim features should be supported.
 
 Known limitations include:
-    - command line arguments (exluding filename) are not forwarded to Neovim
-    - cursor style is not updated on mode change (as those cursor styles are not supported by curses)
+    * command line arguments (exluding filename) are not forwarded to Neovim
+    * cursor style is not updated on mode change (as those cursor styles are not supported by curses)
 
 ### Installation
 
@@ -33,14 +33,13 @@ pip install .
 The editor can be run in three ways:
 
 Running the installed script:
-neovim_pytc [file]
+`neovim_pytc [file]`
 
 Directly running the source script:
-python neovim_pytc/neovim_pytc.py [file]
+`python neovim_pytc/neovim_pytc.py [file]`
 
 Importing and running inside a python script:
-import neovim_pytc
-neovim_pytc.run([file])
+`import neovim_pytc; neovim_pytc.run([file])`
 
 ### Licensing
 
