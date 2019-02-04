@@ -242,7 +242,7 @@ class UIInput(Thread):
         self.tk = ptk.TermKey(flags={ptk.TermKeyFlag.EINTR})
         self.tk.set_canonflags({ptk.TermKeyCanon.DELBS})
         try:
-            for i in range(500):
+            while True:
                 r, k = self.tk.waitkey()
                 if self.is_stopping:
                     break
