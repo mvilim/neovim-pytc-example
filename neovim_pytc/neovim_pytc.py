@@ -232,7 +232,7 @@ class UIInput(Thread):
             new_size = shutil.get_terminal_size()
             logger.debug('Resize-window signal caught [%s]', new_size)
             curses.resizeterm(new_size.lines, new_size.columns)
-            self.nvim.async_call(lambda: self.nvim.ui_try_resize(new_size.columns, new_size.lines))
+            self.nvim.async_call(self.nvim.ui_try_resize, new_size.columns, new_size.lines)
             ptk.set_errno(e)
 
         signal.signal(signal.SIGWINCH, resize_handler)
@@ -257,8 +257,7 @@ class UIInput(Thread):
                         key = self.tk.strfkey(k, ptk.TermKeyFormat.VIM)
                     logger.debug('Received key [%s] with type [%s], bytes [%s]', key, type(key),
                                  bytes(key, 'utf8').hex())
-                    send_key = lambda: self.nvim.api.input(key)
-                    self.nvim.async_call(send_key)
+                    self.nvim.async_call(self.nvim.input, key)
                 elif r == ptk.TermKeyResult.ERROR and ptk.get_errno() == errno.EINTR:
                     logger.debug('Interrupted')
                 else:
@@ -298,7 +297,7 @@ def curses_main(stdscr, filename):
 
     render_thread.start()
 
-    nvim.async_call(lambda: nvim.ui_attach(width, height, rgb=True, ext_linegrid=True))
+    nvim.async_call(nvim.ui_attach, width, height, rgb=True, ext_linegrid=True)
 
     # the input loop must be run in the main input thread to receive signals (SIGQUIT and SIGWINCH)
     try:
