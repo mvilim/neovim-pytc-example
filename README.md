@@ -12,6 +12,14 @@ found in the root folder of the project.
 
 neovim-pytc-example is a Neovim terminal client implemented in Python (using libtermkey for input processing and curses for screen rendering). It reproduces the majority of the functionality of the integral Neovim terminal client. It serves no practical purpose, as no additional functionality is provided -- the project is just to demonstrate integration of the Neovim Python API into a curses terminal application.
 
+### Comparison
+
+Here you can see a comparison between the pytc client and a real nvim terminal client.
+
+|  nvim  | neovim_pytc |
+|--------|-------------|
+| <img width="400" src="https://mvilim.github.io/neovim-pytc-example/img/nvim_capture.svg"> | <img width="400" src="https://mvilim.github.io/neovim-pytc-example/img/neovim_pytc_capture.svg"> |
+
 ### Features
 
 Most Neovim features should be supported.
