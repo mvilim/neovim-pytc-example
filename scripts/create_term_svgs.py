@@ -1,6 +1,9 @@
 # requires pynput and termtosvg
 # additionally, requires a patched version of pyte, see https://github.com/selectel/pyte/pull/103
 
+# TODO: it would probably be better to use a fake source of terminal input and pipe it directly to the editor (so that
+# this SVG generation can be run in the background)
+
 from threading import Thread
 from time import sleep
 import warnings
