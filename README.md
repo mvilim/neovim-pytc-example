@@ -14,11 +14,9 @@ neovim-pytc-example is a Neovim terminal client implemented in Python (using lib
 
 ### Comparison
 
-Here you can see a comparison between the pytc client and a real nvim terminal client.
+Here you can see a comparison of the pytc client and the real nvim terminal client. The cursor is only displayed on the right terminal because the editors are being run inside a synchronized tmux session (so that they both receive the same input).
 
-|  nvim  | neovim_pytc |
-|--------|-------------|
-| <img width="400" src="https://mvilim.github.io/neovim-pytc-example/img/nvim_capture.svg"> | <img width="400" src="https://mvilim.github.io/neovim-pytc-example/img/neovim_pytc_capture.svg"> |
+<img src="https://mvilim.github.io/neovim-pytc-example/img/nvim_neovim_pytc_capture.svg">
 
 ### Features
 
