@@ -48,7 +48,7 @@ class InputThread(Thread):
 
     def run(self):
         try:
-            sleep(1)
+            sleep(3)
             with warnings.catch_warnings():
                 warnings.filterwarnings("ignore", category=DeprecationWarning)
                 # add some text

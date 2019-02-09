@@ -22,6 +22,6 @@ tmux send-keys -t $sn.1 "$cmd1 $cmd1.md" ENTER
 tmux set-window-option -t $sn synchronize-panes on
 
 # ensure that neovim has started before we attach
-sleep 0.5
+sleep 1
 
 tmux attach-session -t $sn
