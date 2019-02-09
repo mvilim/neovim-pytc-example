@@ -49,7 +49,7 @@ class UIRender(Thread):
                          'hl_attr_define': EventHandler(self.hl_attr_define),
                          'grid_scroll': EventHandler(self.grid_scroll, self.cursor_init, self.cursor_deinit),
                          'grid_cursor_goto': EventHandler(self.grid_cursor_goto), 'flush': EventHandler(self.flush)}
-        self.reversed_colors = set()
+        self.attributes = dict()
 
     def stop(self):
         logger.debug('Pre-stop render loop')
@@ -91,23 +91,21 @@ class UIRender(Thread):
         row = event[1]
         col = event[2]
         cells = event[3]
-        hl = None
+        hl_id = None
         for i, cell in enumerate(cells):
             text = cell[0]
             repeat = 1
             # if repeat is greater than 1, we are guaranteed to send an hl_id
             # https://github.com/neovim/neovim/blob/master/src/nvim/api/ui.c#L483
             if len(cell) > 1:
-                hl = cell[1]
+                hl_id = cell[1]
             if len(cell) > 2:
                 repeat = cell[2]
             text = text * repeat
             # ignore failures because of the bottom right cursor behavior -- we should make this checking more robust
             try:
-                other_attr = 0
-                if hl in self.reversed_colors:
-                    other_attr |= curses.A_REVERSE
-                self.scr.addstr(row, col, text, curses.color_pair(hl) | other_attr)
+                attr = self.attributes.get(hl_id, curses.color_pair(hl_id))
+                self.scr.addstr(row, col, text, attr)
             except:
                 pass
             col = col + len(text)
@@ -123,11 +121,13 @@ class UIRender(Thread):
         fg = cterm_attr.get('foreground', -1)
         bg = cterm_attr.get('background', -1)
         curses.init_pair(hl_id, fg, bg)
+        attr = curses.color_pair(hl_id)
         # nvim api docs state that boolean keys here are only sent if true
         if 'reverse' in cterm_attr:
-            self.reversed_colors.add(hl_id)
-        else:
-            self.reversed_colors.discard(hl_id)
+            attr |= curses.A_REVERSE
+        if 'bold' in cterm_attr:
+            attr |= curses.A_BOLD
+        self.attributes[hl_id] = attr
 
     def grid_scroll(self, event):
         grid = event[0]
